@@ -80,9 +80,9 @@ sudo ntpdate a.ntp.br
 
 # ========= Validando o horário e data
 
-horacerta=`date | awk '{print $5}'`
+horacerta=`date | awk '{print $5}' | grep 03`
 
-	if [ horacerta -eq "-03" ] #Validando se o valor da varíavel igual a "-3"
+	if [ -n horacerta] #Valida se a quantidade de caracteres na string é diferente de zero
 	then
 		echo "Fuso horário ajustado para GMT -03 com sucesso" >> $log
 		date >> $log
