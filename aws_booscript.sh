@@ -69,10 +69,10 @@ tz_date=`echo $TZ`
 
 	if [ -n tz_date ] #Valida se a quantidade de caracteres na string é diferente de zero
 	then
-		echo "Variável TZ ajustada com sucesso" >> $log
+		echo "Arquivo localtime e variável TZ ajustados com sucesso" >> $log
 		echo '===========================' >> $log
 	else
-		echo "Variável TZ não ajustada" >> $log
+		echo "Arquivo localtime e variável TZ NÃO foram ajustados" >> $log
 		echo '===========================' >> $log
 	fi
 
@@ -84,11 +84,11 @@ horacerta=`date | awk '{print $5}'`
 
 	if [ horacerta -eq "-03" ] #Validando se o valor da varíavel igual a "-3"
 	then
-		echo "Fuso horário -3 ajustado com sucesso" >> $log
+		echo "Fuso horário ajustado para GMT -03 com sucesso" >> $log
 		date >> $log
 		echo '===========================' >> $log
 	else
-		echo "verificar ntpdate e fuso horário" >> $log
+		echo "Fuso horário NÃO ajustado - verificar ntpdate e fuso horário" >> $log
 		echo '===========================' >> $log
 	fi
 
@@ -104,7 +104,7 @@ install_docker=`dpkg --list | grep docker`
 
 	if [ -z $install_docker ] # valida se a variável está vazia
 	then
-		echo "docker não foi instalado" >> $log
+		echo "docker NÃO foi instalado" >> $log
 		echo '===========================' >> $log
 	else
 		echo "docker instalado com sucesso" >> $log
