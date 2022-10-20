@@ -17,18 +17,18 @@ bash
 
 host_name=`cat /etc/hostname | grep DevOpsXperience`
 
-if [ -n host_name ] #Valida se a quantidade de caracteres na string é diferente de zero
+if [ -z host_name ] # valida se a variável está vazia
 then
-	echo 'Atualizado arquivo Hostname' >> $log
+	echo 'Arquivo Hostname NÃO foi atualizado' >> $log
 	echo '===========================' >> $log
 else
-	echo 'Arquivo Hostname NÃO foi atualizado' >> $log
+	echo 'Atualizado arquivo Hostname' >> $log
 	echo '===========================' >> $log
 fi
 
 # ========= Instalação os pacotes ntpdate e curl
 
-sudo apt uptade -y
+sudo apt update -y
 
 echo 'Repositórios atualizados' >> $log
 echo '===========================' >> $log
@@ -38,7 +38,7 @@ sudo apt install ntpdate -y
 
 # ========= Validando a isntalação
 
-install_curl=`dpkg --list | grep curl`
+install_curl=`dpkg --list | grep curl | awk '{print $2}' | head -1`
 
 
 	if [ -z $install_curl ] # valida se a variável está vazia
