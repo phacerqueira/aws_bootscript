@@ -2,18 +2,22 @@
 
 touch /var/log/bootscript.log
 
-#Variáveis
+#Variável para log
 log="/var/log/bootscript.log"
+
+echo '===========================' >> $log
+echo '====== Início Script ======' >> $log
+echo '===========================' >> $log
 
 # ========= Ajsute o Hostname da máquina
 
-echo "DevOpsXperience" > /etc/hostname
+sudo echo "DevOpsXperience" > /etc/hostname
 sudo hostname DevOpsXperience
 bash
 
-host_name=`cat /etc/hostname`
+host_name=`cat /etc/hostname | grep DevOpsXperience`
 
-if [ host_name = "DevOpsXperience" ]
+if [ -n host_name ] #Valida se a quantidade de caracteres na string é diferente de zero
 then
 	echo 'Atualizado arquivo Hostname' >> $log
 	echo '===========================' >> $log
@@ -26,7 +30,7 @@ fi
 
 sudo apt uptade -y
 
-echo 'Atualizada a lista de repositórios' >> $log
+echo 'Repositórios atualizados' >> $log
 echo '===========================' >> $log
 
 sudo apt install curl ntpdate -y
@@ -36,7 +40,7 @@ sudo apt install curl ntpdate -y
 install_curl=`dpkg --list | grep curl`
 
 
-	if [ -z $install_curl ]
+	if [ -z $install_curl ] # valida se a variável está vazia
 	then
 		echo "CURL não foi instalado" >> $log
 		echo '===========================' >> $log
@@ -62,7 +66,7 @@ export TZ=America/Sao_Paulo
 
 tz_date=`echo $TZ`
 
-	if [tz_date = "America/Sao_Paulo" ]
+	if [ -n tz_date ] #Valida se a quantidade de caracteres na string é diferente de zero
 	then
 		echo "Variável TZ ajustada com sucesso" >> $log
 		echo '===========================' >> $log
@@ -77,7 +81,7 @@ sudo ntpdate a.ntp.br
 
 horacerta=`date | awk '{print $5}'`
 
-	if [ horacerta -eq "-3" ]
+	if [ horacerta -eq "-3" ] #Validando se o valor da varíavel igual a "-3"
 	then
 		echo "Fuso horário -3 ajustado com sucesso" >> $log
 		date >> $log
@@ -89,7 +93,7 @@ horacerta=`date | awk '{print $5}'`
 
 # ========= Instalação do Docker
 
-curl -sSL https://get.docker.com | sh
+curl -sSL https://get.docker.com | bash
 echo 'Instalado Docker' >> $log
 echo '===========================' >> $log
 
@@ -97,7 +101,7 @@ echo '===========================' >> $log
 
 install_docker=`dpkg --list | grep docker`
 
-	if [ -z $install_docker ]
+	if [ -z $install_docker ] # valida se a variável está vazia
 	then
 		echo "docker não foi instalado" >> $log
 		echo '===========================' >> $log
@@ -112,7 +116,7 @@ sudo systemctl start docker.service
 
 docker_ativo=`sudo systemctl status docker.service | grep Active`
 
-	if [ -z docker_ativo]
+	if [ -z docker_ativo] # valida se a variável está vazia
 	then
 		echo 'docker.service NÃO foi ativado' >> $log
 		echo '===========================' >> $log
@@ -127,7 +131,7 @@ sudo usermod -aG docker ubuntu
 
 grupo_docker=`cat /etc/group | grep "docker.*ubuntu"`
 
-	if [-z grupo_docker ]
+	if [-z grupo_docker ] # valida se a variável está vazia
 	then
 		echo 'Usuario Ubuntu NÃO FOI adicionado no grupo Docker' >> $log
 		echo '===========================' >> $log
@@ -145,7 +149,7 @@ echo 'Iniciado Container NGINX' >> $log
 
 cont_nginx=`docker container ls | grep -i nginx`
 
-if [ -z cont_nginx ]
+if [ -z cont_nginx ] # valida se a variável está vazia
 then
 	echo 'Erro ao criar Container NGNIX' >> $log
 	echo '===========================' >> $log
