@@ -33,7 +33,8 @@ sudo apt uptade -y
 echo 'Repositórios atualizados' >> $log
 echo '===========================' >> $log
 
-sudo apt install curl ntpdate -y
+sudo apt install curl -y
+sudo apt install ntpdate -y
 
 # ========= Validando a isntalação
 
@@ -81,7 +82,7 @@ sudo ntpdate a.ntp.br
 
 horacerta=`date | awk '{print $5}'`
 
-	if [ horacerta -eq "-3" ] #Validando se o valor da varíavel igual a "-3"
+	if [ horacerta -eq "-03" ] #Validando se o valor da varíavel igual a "-3"
 	then
 		echo "Fuso horário -3 ajustado com sucesso" >> $log
 		date >> $log
