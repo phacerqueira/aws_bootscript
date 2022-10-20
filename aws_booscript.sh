@@ -50,7 +50,7 @@ install_curl=`dpkg --list | grep curl | awk '{print $2}' | head -1`
 		echo '===========================' >> $log
 	fi
 
-install_ntpdate=`dpkg --list | grep ntpdate`
+install_ntpdate=`dpkg --list | grep ntpdate | awk '{print $2}' | head -1`
 
 	if [ -z $install_ntpdate ]
 	then
