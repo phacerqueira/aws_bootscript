@@ -82,14 +82,15 @@ sudo ntpdate a.ntp.br
 
 horacerta=`date | awk '{print $5}' | grep 03`
 
-	if [ -n horacerta] #Valida se a quantidade de caracteres na string é diferente de zero
+	if [ -z horacerta] # valida se a variável está vazia
 	then
+		echo "Fuso horário NÃO ajustado - verificar ntpdate e fuso horário" >> $log
+		echo '===========================' >> $log
+	else
 		echo "Fuso horário ajustado para GMT -03 com sucesso" >> $log
 		date >> $log
 		echo '===========================' >> $log
-	else
-		echo "Fuso horário NÃO ajustado - verificar ntpdate e fuso horário" >> $log
-		echo '===========================' >> $log
+
 	fi
 
 # ========= Instalação do Docker
@@ -100,7 +101,7 @@ echo '===========================' >> $log
 
 # ========= Validando instalação do Docker
 
-install_docker=`dpkg --list | grep docker`
+install_docker=`dpkg --list | grep docker | awk '{print $2}' | head -1`
 
 	if [ -z $install_docker ] # valida se a variável está vazia
 	then
