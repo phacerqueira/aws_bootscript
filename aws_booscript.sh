@@ -41,7 +41,7 @@ sudo apt install ntpdate -y
 install_curl=`dpkg --list | grep curl | awk '{print $2}' | head -1`
 
 
-	if [ -z $install_curl ] # valida se a variável está vazia
+	if [ -z $install_curl ]
 	then
 		echo "CURL não foi instalado" >> $log
 		echo '===========================' >> $log
@@ -82,7 +82,7 @@ sudo ntpdate a.ntp.br
 
 horacerta=`date | awk '{print $5}' | grep 03`
 
-	if [ -z horacerta] # valida se a variável está vazia
+	if [ -z horacerta]
 	then
 		echo "Fuso horário NÃO ajustado - verificar ntpdate e fuso horário" >> $log
 		echo '===========================' >> $log
@@ -103,7 +103,7 @@ echo '===========================' >> $log
 
 install_docker=`dpkg --list | grep docker | awk '{print $2}' | head -1`
 
-	if [ -z $install_docker ] # valida se a variável está vazia
+	if [ -z $install_docker ]
 	then
 		echo "docker NÃO foi instalado" >> $log
 		echo '===========================' >> $log
@@ -118,7 +118,7 @@ sudo systemctl start docker.service
 
 docker_ativo=`sudo systemctl status docker.service | grep Active`
 
-	if [ -z docker_ativo] # valida se a variável está vazia
+	if [ -z docker_ativo]
 	then
 		echo 'docker.service NÃO foi ativado' >> $log
 		echo '===========================' >> $log
@@ -133,7 +133,7 @@ sudo usermod -aG docker ubuntu
 
 grupo_docker=`cat /etc/group | grep "docker.*ubuntu"`
 
-	if [-z grupo_docker ] # valida se a variável está vazia
+	if [-z grupo_docker ]
 	then
 		echo 'Usuario Ubuntu NÃO FOI adicionado no grupo Docker' >> $log
 		echo '===========================' >> $log
@@ -151,7 +151,7 @@ echo 'Iniciado Container NGINX' >> $log
 
 cont_nginx=`docker container ls | grep -i nginx`
 
-if [ -z cont_nginx ] # valida se a variável está vazia
+if [ -z cont_nginx ]
 then
 	echo 'Erro ao criar Container NGNIX' >> $log
 	echo '===========================' >> $log
